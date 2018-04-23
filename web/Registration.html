@@ -1,0 +1,158 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+<script type="text/javascript" src="jsFile/RegistrationController.js">
+</script>
+</head>
+<body ng-controller="myCtrl">
+   
+    
+    <div class="container">
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2">
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="panel-title">Hotel Registration Form.</div>
+</div>
+<div class="panel-body">
+         <form name="signupForm1" id="signupForm1" method="post" class="form-horizontal" action="Registration">
+<div class="form-group">
+<label class="col-sm-4 control-label" for="hName">Hotel name</label>
+<div class="col-sm-5">
+    <input type="text" class="form-control" id="hName" ng-model="hotel.hName" name="hName" placeholder="Hotel name" required />
+</div>
+<span  style="color: red" ng-show="signupForm1.hName.$touched && signupForm1.hName.$invalid">The name is required.</span>
+
+</div>
+<div class="form-group">
+<label class="col-sm-4 control-label" for="oName">Owner name</label>
+<div class="col-sm-5">
+<input type="text" class="form-control"  id="oName" name="oName" ng-model="hotel.oName" placeholder="Last name" required/>
+</div>
+<span  style="color: red" ng-show="signupForm1.oName.$touched && signupForm1.oName.$invalid">The name is required.</span>
+</div>
+<div class="form-group">
+<label class="col-sm-4 control-label" for="hPhone">Hotel Phone Number</label>
+<div class="col-sm-5">
+<input type="number" class="form-control" id="hPhone" name="hPhone" ng-model="hotel.hPhone" placeholder="Hotel Phone Number" ng-minlength="10" ng-maxlength="10" required/>
+<span id="spnPhoneStatus"></span>
+</div>
+<span  style="color: red" ng-show="signupForm1.hPhone.$touched && signupForm1.hPhone.$invalid" class="help-block" >The name is required.</span>
+<span style="color: red">
+      <span class="error" ng-show="signupForm1.hPhone.$error.minlength">Phone no not less that 10 digit.</span>
+      <span class="error" ng-show="signupForm1.hPhone.$error.maxlength">Phone no not more than 11 digit.</span>
+</span>
+</div>
+<div class="form-group">
+<label class="col-sm-4 control-label" for="oPhone">Owner Phone Number</label>
+<div class="col-sm-5">
+<input type="number" class="form-control" id="oPhone" name="oPhone" ng-model="hotel.oPhone" placeholder="Owner Phone Number" ng-minlength="10" ng-maxlength="10" required/>
+<span id="oPhoneStatus"></span>
+</div>
+<span  style="color: red" ng-show="signupForm1.oPhone.$touched && signupForm1.oPhone.$invalid" class="help-block" >The name is required.</span>
+<span style="color: red">
+      <span class="error" ng-show="signupForm1.oPhone.$error.minlength">Phone no not less that 10 digit.</span>
+      <span class="error" ng-show="signupForm1.oPhone.$error.maxlength">Phone no not more than 11 digit.</span>
+</span>
+</div>
+             
+
+<div class="form-group">
+<label class="col-sm-4 control-label" for="email1">Email</label>
+<div class="col-sm-5">
+<input type="text" class="form-control" id="email1" name="hEmail" placeholder="Email" ng-model="hotel.hemail" ng-blur="checkemail()" ng-pattern="eml_add" ng-required="true"/>
+
+</div>
+
+
+<p style="color: red">{{message1}}</p>
+
+</div>
+<div class="form-group">
+<label class="col-sm-4 control-label" for="pin">Pincode</label>
+<div class="col-sm-5">
+    <input type="number" class="form-control" id="pin" name="pin" placeholder="Hotel pincode" value="pincode1" ng-model="hotel.pincode" ng-pattern="pin_add" ng-required="true" ng-blur="getAddress()"/>
+</div>
+
+<span style="color: red">{{message2}}</span>
+<span style="color: red" ng-if="message.state.length == 0">there no any address for entered pincode</span>
+
+</div>
+<div class="form-group">
+              <label for="hState" class="col-sm-4 control-label">State</label>
+              <div class="col-sm-5">
+                  <select name="state" class="form-control fontsize" data-live-search="true" ng-model="hotel.state" ng-options="o for o in message.state track by o">
+                </select>
+              </div>
+            </div>
+<div class="form-group">
+              <label for="hDistrict" class="col-sm-4 control-label">District</label>
+              <div class="col-sm-5">
+                  <select name="district" class="form-control fontsize" data-live-search="true" ng-model="hotel.district" ng-options="o for o in message.district track by o">
+                </select>
+                               
+              </div>
+            </div>
+<div class="form-group">
+              <label for="city" class="col-sm-4 control-label">City</label>
+              <div class="col-sm-5">
+                  <select name="city" class="form-control fontsize" data-live-search="true" ng-model="hotel.city" ng-options="o for o in message.city track by o">
+                
+                 
+                </select>
+
+              </div>
+            </div>
+          
+<div class="form-group">
+              <label for="areaName" class="col-sm-4 control-label">AreaName</label>
+              <div class="col-sm-5" >
+                  <select name="areaName" class="form-control fontsize" data-live-search="true" ng-model="hotel.areaName" ng-options="o for o in message.areaName track by o">
+              
+             </select>
+   
+
+              </div>
+            </div>
+
+
+
+<div class="form-group">
+<div class="col-sm-5 col-sm-offset-4">
+<div class="checkbox">
+<label>
+    <input type="checkbox" id="agree1" name="agree1" value="agree" ng-model="hotel.agree" required/>Please agree to our policy
+</label>
+</div>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-9 col-sm-offset-4">
+    <button type="submit" class="btn btn-primary"  name="signup1" ng-click="signup1" value="Sign up">Sign up</button>
+</div>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+        
+    
+    
+    
+    
+    
+</body>
+</html>

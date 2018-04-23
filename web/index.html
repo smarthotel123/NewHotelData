@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+AngularJs $http.post() Service Method Example
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    
+var app=angular.module('myApp',[]);
+app.controller('addressController',function($scope,$http){
+    $scope.user = {};
+ 
+  $scope.add = function() 
+  {
+    $http({
+      method: 'POST',
+      url: 'TestDemo',
+      headers: {'Content-Type': 'application/json'},
+      data:  $scope.user
+    }).success(function (data) 
+      {
+    	$scope.status=data;
+      });
+  };
+    //$scope.pincode=110010;
+    $scope.sendPost=function (){
+        $http({
+            url : 'TestController',
+            method : "POST",
+            data : {
+                'pincode' : $scope.pincode
+            }
+        }).then(function(response) {
+            console.log(response.data);
+            $scope.message = response.data;
+        }, function(response) {
+            //fail case
+            console.log(response);
+            $scope.message = response;
+        });
+    }
+
+});
+
+</script>
+<body ng-app="myApp" ng-controller="addressController">
+    <h1>Hello</h1>
+    <form  ng-submit="sendPost()">
+  <a href="Login.jsp" class="btn btn-info btn-lg">Login</a>
+  <a href="Registration.html" class="btn btn-info btn-lg">--Registration--</a>
+    </form>
+</body>
+
+</html>

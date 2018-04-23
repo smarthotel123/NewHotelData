@@ -1,0 +1,11 @@
+{
+    "elements": {},
+    "attributes": {
+        "ng-blur": {
+            "context": "input"
+        },
+        "ng-app": {
+            "context": "div"
+        }
+    }
+}
